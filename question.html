@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html>
+<title> Tower Defense </title>
+
+<style>
+#myCanvas{
+	background-image: url(track.png);
+	padding: 0px;
+	margin: 0px;
+
+}
+body {
+	padding: 0px;
+	margin: 0px;
+}
+#buyMenu {
+	border: 20px solid red;
+	position: fixed;
+	top: 100px;
+	left: 200px;
+}
+
+p.serif {
+	font-family: beholder, serif;
+	font-size: 200%;
+	position: relative;
+	text-align: left;
+	width: 100%;
+	top: 0;
+}
+
+
+
+
+
+
+
+
+</style>
+<body>
+
+	<p class="serif"> Tower Defense </p>
+
+
+	
+
+<canvas id="myCanvas" width="686" height="593" style="border:1px solid green"> 
+
+
+
+ </canvas>
+
+ <img id="demo" src="sign.png" alt="X" >
+<img id="buyMenu" src="sign.png">
+
+<script>
+	var c = document.getElementById("myCanvas");
+	var ctx = c.getContext("2d");
+	var bgImage = new Image();
+	var plus = new Image();
+	bgImage.src="track.png";
+	plus.src="sign.png";
+	var X = document.getElementById('demo');
+
+	X.addEventListener("click", doMenu, false);
+
+
+	var allBalloons = [];
+	
+	allBalloons.push(new Balloon());
+
+
+
+	//create empty array of X objects
+
+	//add all X objects to the array
+
+	//add event listeners to each one
+	
+
+
+
+
+
+
+	setInterval(go, 1);
+
+	function go() {
+		drawBackground();
+		drawPlusses();
+		perhapsAddNewBalloon();
+		balloonMoveAndDraw();
+
+
+
+	}
+
+	function perhapsAddNewBalloon() {
+		if(Math.random() > 0.99)
+			allBalloons.push(new Balloon());
+	}
+
+	function drawBackground() {
+    ctx.drawImage(bgImage,0, 0);
+}
+
+	function balloonMoveAndDraw() {
+		for(var pos in allBalloons)
+			allBalloons[pos].draw();
+	}
+
+	function drawPlusses() {
+
+
+		ctx.drawImage(plus, 60,170);
+		ctx.drawImage(plus, 190,110);
+		ctx.drawImage(plus, 185,240);
+		ctx.drawImage(plus, 75,35);
+		ctx.drawImage(plus, 335,20);
+		ctx.drawImage(plus, 350,435);
+		ctx.drawImage(plus, 235,355);
+		ctx.drawImage(plus, 30,380);
+		ctx.drawImage(plus, 10,550);
+		ctx.drawImage(plus, 550,475);
+		ctx.drawImage(plus, 645,295);
+		ctx.drawImage(plus, 500,240);
+		ctx.drawImage(plus, 390,130);
+		ctx.drawImage(plus, 560,35);
+
+		}
+
+		function Balloon() {
+			this.x = 0;
+			this.y = 150;
+			this.height = 125;
+			this.width = 65;
+			this.balloon = new Image();
+			this.balloon.src="balloon.png";
+			this.path1 = 1;
+			this.path2 = 2;
+			this.path3 = 3;
+			this.path4 = 4;
+			this.path5 = 5;
+			this.path6 = 6;
+			this.path7 = 7;
+			this.path8 = 8;
+			this.path9 = 9;
+			this.path10 = 10;
+			this.path11 = 11;
+			this.path12 = 12;
+			this.path13 = 13;
+			this.currPath = this.path1;
+
+
+			this.draw = function() {
+
+			ctx.drawImage(this.balloon, this.x, this.y);
+
+				if(this.currPath == this.path1){
+			this.x++;
+			if(this.x + this.width >= 170)	{
+			this.currPath = this.path2;
+			
+		}
+
+		}
+		else if(this.currPath == this.path2){
+			this.y--;
+			if(this.y + this.height <= 70) 
+				this.currPath = this.path3;
+
+		
+
+		}
+		else if(this.currPath == this.path3){
+			this.x++;
+			if(this.x + this.width >= 350) 
+				this.currPath = this.path4;
+			
+		}
+		else if(this.currPath == this.path4){
+			this.y++;
+			if(this.y + this.height >= 450) 
+				this.currPath = this.path5;;
+			
+		}
+		else if(this.currPath == this.path5){
+			this.x--;
+			if(this.x + this.width <= 120) 
+				this.currPath = this.path6;
+			
+
+		}
+		else if(this.currPath == this.path6){
+			this.y++;
+			if(this.y + this.height >= 570) 
+				this.currPath = this.path7;
+			
+		}
+		else if(this.currPath == this.path7){
+			this.x++;
+			if(this.x + this.width >= 670) 
+				this.currPath = this.path8;
+			
+
+		}
+		else if(this.currPath == this.path8){
+			this.y--;
+			if(this.y + this.height <= 375) 
+				this.currPath = this.path9;
+			
+
+	}
+		else if(this.currPath == this.path9){
+			this.x--;
+			if(this.x + this.width <= 480)
+				this.currPath = this.path10;
+		}
+
+
+		else if(this.currPath == this.path10){
+			this.y--;
+			if(this.y + this.height <= 200)
+				this.currPath = this.path11;
+		}
+
+
+		else if(currPath == path11){
+			this.x++;
+			if(this.x + this.width >= 690)
+				this.currPath = this.path12;
+		}
+
+
+		else if(this.currPath == this.path12)
+			this.y--;
+			}
+
+		}
+
+		function doMenu(event) {
+		if( buyMenu.style.visibility == "hidden" ) {
+			buyMenu.style.visibility = "visible";
+		}
+		else {
+			buyMenu.style.visibility = "hidden";
+		}
+		event.target.style.border = "7px solid red";
+}
+
+		
+
+
+
+</script>
+</body>
+</html>
+

@@ -1,0 +1,495 @@
+<!DOCTYPE html>
+<html>
+<title> Tower Defense </title>
+
+<style>
+#myCanvas{
+	background-image: url(track.png);
+	padding: 0px;
+	margin: 0px;
+
+}
+body {
+	padding: 0px;
+	margin: 0px;
+}
+#buyMenu {
+		 background-image: url(bg.jpg);
+        border: 5px solid green;
+        list-style-type: none;
+        position: fixed;
+        top: 120px;
+        left: 695px;
+        color: white;
+}
+
+li a {
+        display: block;
+        color: #000;
+        padding: 8px 16px;
+        text-decoration: none;
+}
+
+p.serif {
+	font-family: beholder, serif;
+	font-size: 200%;
+	position: fixed;
+	width: 100%;
+	top: 30px;
+	left: 695px;
+
+}
+
+p.altalt {
+	font-family: beholder, serif;
+	font-size: 200%;
+	position: fixed;
+	width: 100%;
+	top: -10px;
+	left: 695px;
+
+}
+
+p.alt {
+	font-family: beholder, serif;
+	font-size: 200%;
+	position: fixed;
+	width: 100%;
+	top: 60px;
+	left: 695px;
+}
+
+.imgsize {
+	width: 50px;
+	height: 50px;
+}
+
+#white {
+	background: white;
+	border: 5px solid white;
+	position: fixed;
+	top: 120px;
+	left: 695px;
+	width: 200px;
+	height: 400px;
+}
+
+#GameOver {
+	font-family: beholder, serif;
+	font-size: 500%;
+	position: fixed;
+	width: 100%;
+	top: 150px;
+	left: 200px;
+}
+
+
+
+
+
+
+
+
+</style>
+<body>
+
+	
+	
+
+<canvas id="myCanvas" width="686" height="593" style="border:1px solid green"> 
+
+
+
+ </canvas>
+
+
+
+
+
+
+
+
+<div id="buyMenu">
+        <H1>BUY MENU</H1>
+        <ul>
+                <li><img src="tower1.png" class="imgsize" id="firsttower"></li>
+                <li><img src="tower2.png" class="imgsize" id="secondtower"></li>
+                <li><img src="tower3.png" class="imgsize" id="thirdtower"></li>
+        </ul>
+</div>
+
+<p id="GameOver"> GAME OVER </p>
+
+<div id="white"> </div>
+
+<p class="serif" id="lives"> Lives: 100</p> 
+
+<p class="alt"> Money: </p>
+
+<p class="altalt"> Tower Defense </p>
+
+<script>
+	var c = document.getElementById("myCanvas");
+	var ctx = c.getContext("2d");
+	var bgImage = new Image();
+	var buyMenu = new Image();
+	buyMenu.src= "sign.png";
+	bgImage.src="track.png";
+	var lives = 100;
+	var money = 100;
+
+	var buyMenu = document.getElementById('buyMenu');
+	var livesdisplay = document.getElementById('lives');
+
+	var firsttower = document.getElementById('firsttower');
+	var secondtower = document.getElementById('secondtower');
+	var thirdtower = document.getElementById('thirdtower');
+
+	firsttower.addEventListener("click", addfirsttower, false);
+	secondtower.addEventListener("click", addsecondtower, false);
+	thirdtower.addEventListener("click", addthirdtower, false);
+
+	var currXClicked = -1;
+
+	var allBalloons = [];
+
+	var allXs = [];
+	allXs.push(new AnX(60, 170));
+	allXs.push(new AnX(190, 110));
+	allXs.push(new AnX(185, 240));
+	allXs.push(new AnX(75, 35));
+	allXs.push(new AnX(335, 20));
+	allXs.push(new AnX(350, 435));
+	allXs.push(new AnX(235, 355));
+	allXs.push(new AnX(30, 380));
+	allXs.push(new AnX(10, 550));
+	allXs.push(new AnX(550, 475));
+	allXs.push(new AnX(645, 295));
+	allXs.push(new AnX(500, 240));
+	allXs.push(new AnX(560, 35));
+
+	GameOver.style.visibility = "hidden";
+
+	
+	allBalloons.push(new Balloon());
+
+	addEventListener("click", handleClick, false);
+
+	function addfirsttower() {
+		allXs[currXClicked].currstate = allXs[currXClicked].state1;
+			buyMenu.style.visibility = "hidden";
+			}
+
+	function addsecondtower() {
+		allXs[currXClicked].currstate = allXs[currXClicked].state2;
+			buyMenu.style.visibility = "hidden";
+	}
+
+	function addthirdtower() {
+		allXs[currXClicked].currstate = allXs[currXClicked].state3;
+			buyMenu.style.visibility = "hidden";
+	}
+
+
+
+	function handleClick(event) {
+		var xClick = event.clientX;
+		var yClick = event.clientY;
+		var size = 30;
+
+		if(xClick >= 60 && xClick <= 60 + size && yClick >= 170 && yClick <= 170 + size ){
+			doMenu(allXs[0]);
+			currXClicked=0;
+
+		}
+
+		if(xClick >= 190 && xClick <= 190 + size && yClick >= 110 && yClick <= 110 + size ){
+			doMenu(allXs[0]);
+			currXClicked=1;
+		}
+
+		if(xClick >= 185 && xClick <= 185 + size && yClick >= 240 && yClick <= 240 + size ){
+			doMenu(allXs[0]);
+			currXClicked=2;
+		}
+
+		if(xClick >= 75 && xClick <= 75 + size && yClick >= 35 && yClick <= 35 + size ){
+			doMenu(allXs[0]);
+			currXClicked=3;
+		}
+
+		if(xClick >= 335 && xClick <= 335 + size && yClick >= 20 && yClick <= 20 + size ){
+			doMenu(allXs[0]);
+			currXClicked=4;
+		}
+
+		if(xClick >= 350 && xClick <= 350 + size && yClick >= 435 && yClick <= 435 + size ){
+			doMenu(allXs[0]);
+			currXClicked=5;
+		}
+
+		if(xClick >= 235 && xClick <= 235 + size && yClick >= 355 && yClick <= 355 + size ){
+			doMenu(allXs[0]);
+			currXClicked=6;
+		}
+
+		if(xClick >= 30 && xClick <= 30 + size && yClick >= 380 && yClick <= 380 + size ){
+			doMenu(allXs[0]);
+			currXClicked=7;
+		}
+
+		if(xClick >= 10 && xClick <= 10 + size && yClick >= 550 && yClick <= 550 + size ){
+			doMenu(allXs[0]);
+			currXClicked=8;
+		}
+
+		if(xClick >= 550 && xClick <= 550 + size && yClick >= 475 && yClick <= 475 + size ){
+			doMenu(allXs[0]);
+			currXClicked=9;
+		}
+
+		if(xClick >= 645 && xClick <= 645 + size && yClick >= 295 && yClick <= 295 + size ){
+			doMenu(allXs[0]);
+			currXClicked=10;
+		}
+
+		if(xClick >= 500 && xClick <= 500 + size && yClick >= 240 && yClick <= 240 + size ){
+			doMenu(allXs[0]);
+			currXClicked=11;
+		}
+
+		if(xClick >= 560 && xClick <= 560 + size && yClick >= 35 && yClick <= 35 + size ){
+			doMenu(allXs[0]);
+			currXClicked=12;
+		}
+	}
+
+
+function AnX(xVal, yVal) {
+	this.x = xVal;
+	this.y = yVal;
+	this.img = new Image();
+	this.img.src = "sign.png";
+	this.tower1 = new Image();
+	this.tower2 = new Image();
+	this.tower3 = new Image();
+	this.tower1.src = "tower1.png";
+	this.tower2.src = "tower2.png";
+	this.tower3.src = "tower3.png";
+	this.regstate = 0;
+	this.currstate = this.regstate;
+	this.state1 = 1;
+	this.state2 = 2;
+	this.state3 = 3;
+
+	this.draw = function() {
+		if(this.currstate == this.regstate)
+		ctx.drawImage(this.img, this.x,this.y);
+
+		else if(this.currstate == this.state1)
+			ctx.drawImage(this.tower1, this.x, this.y);
+
+		else if(this.currstate == this.state2)
+			ctx.drawImage(this.tower2, this.x, this.y);
+
+		else if(this.currstate == this.state3)
+			ctx.drawImage(this.tower3, this.x, this.y);
+		}
+}
+
+
+
+
+	setInterval(go, 1);
+
+	function go() {
+		drawBackground();
+		drawPlusses();
+		perhapsAddNewBalloon();
+		balloonMoveAndDraw();
+		livesdisplay.innerHTML="Lives: " + lives;
+		
+		
+
+
+
+	}
+
+	function perhapsAddNewBalloon() {
+		if(Math.random() > 0.99)
+			allBalloons.push(new Balloon());
+	}
+
+
+
+	function drawBackground() {
+    ctx.drawImage(bgImage,0, 0);
+}
+
+	
+	
+
+	function balloonMoveAndDraw() {
+		for(var pos in allBalloons)
+			allBalloons[pos].draw();
+	}
+
+	function drawPlusses() {
+		for(var pos in allXs)
+			allXs[pos].draw();
+		}
+
+		function Balloon() {
+			
+			this.x = 0;
+			this.y = 150;
+			this.height = 63;
+			this.width = 33;
+			this.balloon = new Image();
+			this.balloon.src="balloon.png";
+			this.path1 = 1;
+			this.path2 = 2;
+			this.path3 = 3;
+			this.path4 = 4;
+			this.path5 = 5;
+			this.path6 = 6;
+			this.path7 = 7;
+			this.path8 = 8;
+			this.path9 = 9;
+			this.path10 = 10;
+			this.path11 = 11;
+			this.path12 = 12;
+			this.path13 = 13;
+			this.currPath = this.path1;
+			
+			
+			
+			
+
+
+			this.draw = function() {
+
+				
+
+				
+
+				
+
+			ctx.drawImage(this.balloon, this.x, this.y);
+			
+
+				if(this.y + this.height == -50 && lives > 0){
+					lives--;
+				}
+				if(lives <= 0){
+					GameOver.style.visibility = "visible";
+					return;
+				}
+
+				if(this.currPath == this.path1){
+			this.x++;
+			if(this.x + this.width >= 170)	{
+			this.currPath = this.path2;
+			
+		}
+
+		}
+		else if(this.currPath == this.path2){
+			this.y--;
+			if(this.y + this.height <= 70) 
+				this.currPath = this.path3;
+
+		
+
+		}
+		else if(this.currPath == this.path3){
+			this.x++;
+			if(this.x + this.width >= 350) 
+				this.currPath = this.path4;
+			
+		}
+		else if(this.currPath == this.path4){
+			this.y++;
+			if(this.y + this.height >= 450) 
+				this.currPath = this.path5;;
+			
+		}
+		else if(this.currPath == this.path5){
+			this.x--;
+			if(this.x + this.width <= 120) 
+				this.currPath = this.path6;
+			
+
+		}
+		else if(this.currPath == this.path6){
+			this.y++;
+			if(this.y + this.height >= 570) 
+				this.currPath = this.path7;
+			
+		}
+		else if(this.currPath == this.path7){
+			this.x++;
+			if(this.x + this.width >= 670) 
+				this.currPath = this.path8;
+			
+
+		}
+		else if(this.currPath == this.path8){
+			this.y--;
+			if(this.y + this.height <= 375) 
+				this.currPath = this.path9;
+			
+
+	}
+		else if(this.currPath == this.path9){
+			this.x--;
+			if(this.x + this.width <= 480)
+				this.currPath = this.path10;
+		}
+
+
+		else if(this.currPath == this.path10){
+			this.y--;
+			if(this.y + this.height <= 200)
+				this.currPath = this.path11;
+		}
+
+
+		else if(this.currPath == this.path11){
+			this.x++;
+			if(this.x + this.width >= 690)
+				this.currPath = this.path12;
+		}
+
+
+		else if(this.currPath == this.path12){
+			this.y--;
+		}
+	
+			
+			}
+
+		}
+
+		function doMenu() {
+		if( buyMenu.style.visibility == "visible" ) {
+			buyMenu.style.visibility = "hidden";
+			white.style.visibility = "visible";
+		}
+		else {
+			buyMenu.style.visibility = "visible";
+			white.style.visibility = "hidden"
+		}
+		
+}
+
+
+
+		
+
+
+
+</script>
+</body>
+</html>
+
